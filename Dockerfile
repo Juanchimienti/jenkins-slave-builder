@@ -4,7 +4,7 @@ FROM alpine:3.8
 ENV AWS_CLI_VERSION 1.15.66
 
 # Versions: https://github.com/docker/docker-ce/releases
-ENV DOCKER_VERSION 18.03.1
+ENV DOCKER_VERSION 18
 
 USER root
 
