@@ -30,3 +30,23 @@ ENV SOPS_VERSION="3.0.5"
 
 RUN wget https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux -O /usr/local/bin/sops \
    && chmod +x /usr/local/bin/sops
+
+ARG CLOUD_SDK_VERSION=237.0.0
+ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
+
+ENV PATH /google-cloud-sdk/bin:$PATH
+RUN apk --no-cache add \
+        curl \
+        py-crcmod \
+        bash \
+        libc6-compat \
+        openssh-client \
+        gnupg \
+    && curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+    tar xzf google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+    rm google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
+    ln -s /lib /lib64 && \
+    gcloud config set core/disable_usage_reporting true && \
+    gcloud config set component_manager/disable_update_check true && \
+    gcloud config set metrics/environment github_docker_image && \
+    gcloud --version
