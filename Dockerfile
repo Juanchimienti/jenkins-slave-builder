@@ -9,7 +9,7 @@ ENV DOCKER_VERSION 18
 USER root
 
 RUN apk --no-cache update && \
-    apk --no-cache add python py-pip py-setuptools ca-certificates groff \
+    apk --no-cache add python py-pip py-setuptools ca-certificates groff bash \
                    less docker~${DOCKER_VERSION} git && \
     pip --no-cache-dir install awscli==${AWS_CLI_VERSION} && \
     rm -rf /var/cache/apk/*
@@ -20,11 +20,16 @@ ENV KUBE_LATEST_VERSION="v1.10.6"
 # Note: Latest version of helm may be found at:
 # https://github.com/kubernetes/helm/releases
 ENV HELM_VERSION="v2.9.1"
+# Note: Latest version of helm diff plugin cat be found at:
+# https://github.com/databus23/helm-diff/releases
+ENV HELM_DIFF_VERSION="v2.9.0+3"
 
 RUN wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl \
     && wget -q http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm \
-    && chmod +x /usr/local/bin/helm
+    && chmod +x /usr/local/bin/helm \
+    && helm init --client-only \
+    && helm plugin install 'https://github.com/databus23/helm-diff'
 
 ENV SOPS_VERSION="3.0.5"
 
