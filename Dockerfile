@@ -29,7 +29,7 @@ RUN wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LAT
     && wget -q http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm \
     && chmod +x /usr/local/bin/helm \
     && helm init --client-only \
-    && helm plugin install 'https://github.com/databus23/helm-diff'
+    && helm plugin install 'https://github.com/databus23/helm-diff' --version ${HELM_DIFF_VERSION}
 
 ENV SOPS_VERSION="3.0.5"
 
