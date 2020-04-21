@@ -1,10 +1,10 @@
-FROM alpine:3.8
+FROM alpine:3.11
 
 # Versions: https://pypi.python.org/pypi/awscli#downloads
 ENV AWS_CLI_VERSION 1.15.66
 
 # Versions: https://github.com/docker/docker-ce/releases
-ENV DOCKER_VERSION 18
+ENV DOCKER_VERSION 19
 
 USER root
 
@@ -16,7 +16,7 @@ RUN apk --no-cache update && \
 
 # Note: Latest version of kubectl may be found at:
 # https://github.com/kubernetes/kubernetes/releases
-ENV KUBE_LATEST_VERSION="v1.10.6"
+ENV KUBE_LATEST_VERSION="v1.14.10"
 # Note: Latest version of helm may be found at:
 # https://github.com/kubernetes/helm/releases
 ENV HELM_VERSION="v2.9.1"
@@ -31,7 +31,7 @@ RUN wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LAT
     && helm init --client-only \
     && helm plugin install 'https://github.com/databus23/helm-diff' --version ${HELM_DIFF_VERSION}
 
-ENV SOPS_VERSION="3.0.5"
+ENV SOPS_VERSION="v3.5.0"
 
 RUN wget https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux -O /usr/local/bin/sops \
    && chmod +x /usr/local/bin/sops
