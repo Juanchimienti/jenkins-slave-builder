@@ -1,7 +1,7 @@
 FROM alpine:3.11
 
 # Versions: https://pypi.python.org/pypi/awscli#downloads
-ENV AWS_CLI_VERSION 1.15.66
+ENV AWS_CLI_VERSION 1.18.127
 
 # Versions: https://github.com/docker/docker-ce/releases
 ENV DOCKER_VERSION 19
