@@ -19,7 +19,7 @@ RUN apk --no-cache update && \
 ENV KUBE_LATEST_VERSION="v1.14.10"
 # Note: Latest version of helm may be found at:
 # https://github.com/kubernetes/helm/releases
-ENV HELM_VERSION="v2.9.1"
+ENV HELM_VERSION="v2.17.0"
 # Note: Latest version of helm diff plugin cat be found at:
 # https://github.com/databus23/helm-diff/releases
 ENV HELM_DIFF_VERSION="v2.9.0+3"
