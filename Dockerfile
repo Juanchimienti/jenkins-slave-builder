@@ -19,17 +19,22 @@ RUN apk --no-cache update && \
 ENV KUBE_LATEST_VERSION="v1.14.10"
 # Note: Latest version of helm may be found at:
 # https://github.com/kubernetes/helm/releases
-ENV HELM_VERSION="v2.17.0"
+ENV HELM_VERSION_2="v2.17.0"
+ENV HELM_VERSION_3="v3.5.2"
 # Note: Latest version of helm diff plugin cat be found at:
 # https://github.com/databus23/helm-diff/releases
 ENV HELM_DIFF_VERSION="v2.9.0+3"
+ENV HELM_DIFF_VERSION_3="v3.1.3"
 
 RUN wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl \
-    && wget -q http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm \
+    && wget -q https://get.helm.sh/helm-${HELM_VERSION_3}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm3 \
+    && chmod +x /usr/local/bin/helm3 \
+    && helm3 plugin install 'https://github.com/databus23/helm-diff' --version ${HELM_DIFF_VERSION_3}
+    && wget -q http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION_2}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm \
     && chmod +x /usr/local/bin/helm \
     && helm init --client-only \
-    && helm plugin install 'https://github.com/databus23/helm-diff' --version ${HELM_DIFF_VERSION}
+    && helm plugin install 'https://github.com/databus23/helm-diff' --version ${HELM_DIFF_VERSION_2}
 
 ENV SOPS_VERSION="v3.5.0"
 
