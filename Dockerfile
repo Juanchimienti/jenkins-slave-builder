@@ -23,7 +23,7 @@ ENV HELM_VERSION_2="v2.17.0"
 ENV HELM_VERSION_3="v3.5.2"
 # Note: Latest version of helm diff plugin cat be found at:
 # https://github.com/databus23/helm-diff/releases
-ENV HELM_DIFF_VERSION=2"v2.9.0+3"
+ENV HELM_DIFF_VERSION_2="v2.9.0+3"
 ENV HELM_DIFF_VERSION_3="v3.1.3"
 
 RUN wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl \
