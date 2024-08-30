@@ -1,19 +1,19 @@
-FROM alpine:3.16
+FROM alpine:3.20
 
 # Versions: https://pypi.python.org/pypi/awscli#downloads
-ENV AWS_CLI_VERSION 1.22.50
+ENV AWS_CLI_VERSION 1.29.85
 
 # Aws Elastic Beanstalk CLI https://github.com/aws/aws-elastic-beanstalk-cli/tags
-ENV EB_VERSION="3.20.3"
+ENV EB_VERSION="3.20.10"
 
-ENV DOCKER_VERSION 20
+ENV DOCKER_VERSION 26
 
 USER root
 
 RUN apk --no-cache update \
-    && apk --no-cache add python3 py-pip py-setuptools ca-certificates groff bash \
+    && apk --no-cache add python3 py-pip py-setuptools ca-certificates groff bash rsync\
                    less docker~${DOCKER_VERSION} git gcc libffi-dev python3-dev musl-dev \
-    && pip --no-cache-dir install awscli==${AWS_CLI_VERSION} awsebcli==${EB_VERSION} --ignore-installed six \
+    && pip install --break-system-packages --no-cache-dir --ignore-installed awscli==${AWS_CLI_VERSION} awsebcli==${EB_VERSION} six \
     && rm -rf /var/cache/apk/*
 
 # Note: Latest version of kubectl may be found at:
@@ -38,7 +38,7 @@ ENV SOPS_VERSION="v3.7.3"
 RUN wget https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux -O /usr/local/bin/sops \
    && chmod +x /usr/local/bin/sops
 
-ARG CLOUD_SDK_VERSION=392.0.0
+ARG CLOUD_SDK_VERSION=490.0.0
 ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
 
 ENV PATH /google-cloud-sdk/bin:$PATH
