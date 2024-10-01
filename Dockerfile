@@ -12,7 +12,7 @@ USER root
 
 RUN apk --no-cache update \
     && apk --no-cache add python3 py-pip py-setuptools ca-certificates groff bash rsync\
-                   less docker~${DOCKER_VERSION} git gcc libffi-dev python3-dev musl-dev \
+                   less docker~${DOCKER_VERSION} docker-compose git gcc libffi-dev python3-dev musl-dev \
     && pip install --break-system-packages --no-cache-dir --ignore-installed awscli==${AWS_CLI_VERSION} awsebcli==${EB_VERSION} six \
     && rm -rf /var/cache/apk/*
 
