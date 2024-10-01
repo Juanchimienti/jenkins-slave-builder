@@ -12,9 +12,11 @@ USER root
 
 RUN apk --no-cache update \
     && apk --no-cache add python3 py-pip py-setuptools ca-certificates groff bash rsync\
-                   less docker~${DOCKER_VERSION} docker-compose git gcc libffi-dev python3-dev musl-dev \
+                   less docker~${DOCKER_VERSION} docker-compose git gcc libffi-dev python3-dev musl-dev php php-phar php-iconv php-openssl\
     && pip install --break-system-packages --no-cache-dir --ignore-installed awscli==${AWS_CLI_VERSION} awsebcli==${EB_VERSION} six \
     && rm -rf /var/cache/apk/*
+
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
 
 # Note: Latest version of kubectl may be found at:
 # https://github.com/kubernetes/kubernetes/releases
